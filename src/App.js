@@ -30,6 +30,13 @@ function App() {
         <header className="App-header">
           <Typography variant="h2">webmidi thing</Typography>
           <Typography variant="h3">inputs:</Typography>
+          {WebMidi.inputs.map((input) => (
+            <Typography variant="h5" key={input.id}>{input.name}</Typography>
+          ))}
+          <Typography variant="h3">outputs:</Typography>
+          {WebMidi.outputs.map((output) => (
+            <Typography variant="h5" key={output.id}>{output.name}</Typography>
+          ))}
           <TextField
             id="standard-basic"
             color="secondary"

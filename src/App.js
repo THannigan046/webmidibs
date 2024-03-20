@@ -79,12 +79,17 @@ function App() {
         <Stack direction="row" spacing={2}>
           {ccArray.map((cc, index) => (
             <Stack border={'1px solid black'} key={index}>
-              <Input onChange={(e) => setCcArray([...ccArray.slice(0, index), {cc: e.target.value, value: cc.value}, ...ccArray.slice(index + 1)])} placeholder="cc" value={cc.cc} />
-              <Input onChange={(e) => setCcArray([...ccArray.slice(0, index), {cc: cc.cc, value: e.target.value}, ...ccArray.slice(index + 1)])} placeholder="value" value={cc.value} />
+              <Input onChange={(e) => setCcArray([...ccArray.slice(0, index), {cc: +e.target.value, value: cc.value}, ...ccArray.slice(index + 1)])} placeholder="cc" value={cc.cc} />
+              <Input onChange={(e) => setCcArray([...ccArray.slice(0, index), {cc: cc.cc, value: +e.target.value}, ...ccArray.slice(index + 1)])} placeholder="value" value={cc.value} />
             </Stack>
           ))}
         </Stack>
-        <Button onClick={() => channel?.sendControlChange(3, 63).sendControlChange(13, 85)} variant="contained">send</Button>
+        <Button onClick={() => {
+          ccArray.forEach(cc => {
+            console.log(cc.value)
+            channel?.sendControlChange(cc.cc, cc.value)
+          })
+        }} variant="contained">send</Button>
       </div>
     </>
   );

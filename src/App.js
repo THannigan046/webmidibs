@@ -50,7 +50,7 @@ function App() {
           >
             note
           </Button>
-          <Button variant="contained">cc</Button>
+          <Button variant="contained" onClick={() => channel.sendControlChange(3, 60)}>cc</Button>
         </header>
       </div>
     </>

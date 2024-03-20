@@ -34,16 +34,18 @@ function App() {
       <div className="App">
         <header className="App-header">
           <Typography variant="h2">webmidi thing</Typography>
-          <Typography variant="h3">inputs:</Typography>
-          {WebMidi.inputs.map((input) => (
+          <Typography variant="h3">inputs: </Typography>
+          {WebMidi?.inputs.map((input) => (
             <Typography variant="h5" key={input.id}>
-              {input.name}{" "}
+              {input.name}
+              {WebMidi.inputs > 1 && ", "}
             </Typography>
           ))}
           <Typography variant="h3">outputs:</Typography>
-          {WebMidi.outputs.map((output) => (
+          {WebMidi?.outputs.map((output) => (
             <Typography variant="h5" key={output.id}>
-              {output.name}{" "}
+              {output.name}
+              {WebMidi.outputs > 1 && ", "}
             </Typography>
           ))}
           {/* <TextField
@@ -61,7 +63,7 @@ function App() {
             variant="outlined"
           /> */}
           <Button
-            onClick={() => channel?.playNote("C3", { duration: 1000 })}
+            onClick={() => channel?.playNote("C4", { duration: 1000 })}
             variant="contained"
           >
             note
@@ -75,21 +77,51 @@ function App() {
             cc
           </Button>
         </header>
-          <Button onClick={() => setCcArray([...ccArray, {cc: 1, value: 60}])} variant="contained">New Row</Button>
+        <Button
+          onClick={() => setCcArray([...ccArray, { cc: 1, value: 60 }])}
+          variant="contained"
+        >
+          New Row
+        </Button>
         <Stack direction="row" spacing={2}>
           {ccArray.map((cc, index) => (
-            <Stack border={'1px solid black'} key={index}>
-              <Input onChange={(e) => setCcArray([...ccArray.slice(0, index), {cc: +e.target.value, value: cc.value}, ...ccArray.slice(index + 1)])} placeholder="cc" value={cc.cc} />
-              <Input onChange={(e) => setCcArray([...ccArray.slice(0, index), {cc: cc.cc, value: +e.target.value}, ...ccArray.slice(index + 1)])} placeholder="value" value={cc.value} />
+            <Stack border={"1px solid black"} key={index}>
+              <Input
+                onChange={(e) =>
+                  setCcArray([
+                    ...ccArray.slice(0, index),
+                    { cc: +e.target.value, value: cc.value },
+                    ...ccArray.slice(index + 1),
+                  ])
+                }
+                placeholder="cc"
+                value={cc.cc}
+              />
+              <Input
+                onChange={(e) =>
+                  setCcArray([
+                    ...ccArray.slice(0, index),
+                    { cc: cc.cc, value: +e.target.value },
+                    ...ccArray.slice(index + 1),
+                  ])
+                }
+                placeholder="value"
+                value={cc.value}
+              />
             </Stack>
           ))}
         </Stack>
-        <Button onClick={() => {
-          ccArray.forEach(cc => {
-            console.log(cc.value)
-            channel?.sendControlChange(cc.cc, cc.value)
-          })
-        }} variant="contained">send</Button>
+        <Button
+          onClick={() => {
+            ccArray.forEach((cc) => {
+              console.log(cc.value);
+              channel?.sendControlChange(cc.cc, cc.value);
+            });
+          }}
+          variant="contained"
+        >
+          send
+        </Button>
       </div>
     </>
   );

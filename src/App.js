@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import { React, useState } from "react";
 import {
   Stack,
   TextField,
@@ -6,7 +6,7 @@ import {
   Grid,
   Typography,
   Select,
-  Input, 
+  Input,
   MenuItem,
 } from "@mui/material";
 import logo from "./logo.svg";
@@ -26,29 +26,28 @@ function App() {
 
   let output = WebMidi.outputs[0];
   let channel = output?.channels[1];
-  const [ccArray, setCcArray] = useState([{cc: 1, value: 60}]);
-  console.log("🚀 ~ App ~ ccArray:", ccArray)
+  const [ccArray, setCcArray] = useState([{ cc: 1, value: 60 }]);
+  console.log("🚀 ~ App ~ ccArray:", ccArray);
 
   return (
     <>
       <div className="App">
-        <header className="App-header">
-          <Typography variant="h2">webmidi thing</Typography>
-          <Typography variant="h3">inputs: </Typography>
-          {WebMidi?.inputs.map((input) => (
-            <Typography variant="h5" key={input.id}>
-              {input.name}
-              {WebMidi.inputs > 1 && ", "}
-            </Typography>
-          ))}
-          <Typography variant="h3">outputs:</Typography>
-          {WebMidi?.outputs.map((output) => (
-            <Typography variant="h5" key={output.id}>
-              {output.name}
-              {WebMidi.outputs > 1 && ", "}
-            </Typography>
-          ))}
-          {/* <TextField
+        <Typography variant="h2">webmidi thing</Typography>
+        <Typography variant="h3">inputs: </Typography>
+        {WebMidi?.inputs.map((input) => (
+          <Typography variant="h5" key={input.id}>
+            {input.name}
+            {WebMidi.inputs > 1 && ", "}
+          </Typography>
+        ))}
+        <Typography variant="h3">outputs:</Typography>
+        {WebMidi?.outputs.map((output) => (
+          <Typography variant="h5" key={output.id}>
+            {output.name}
+            {WebMidi.outputs > 1 && ", "}
+          </Typography>
+        ))}
+        {/* <TextField
             id="standard-basic"
             color="secondary"
             type="number"
@@ -62,21 +61,20 @@ function App() {
             label="velocity"
             variant="outlined"
           /> */}
-          <Button
-            onClick={() => channel?.playNote("C4", { duration: 1000 })}
-            variant="contained"
-          >
-            note
-          </Button>
-          <Button
-            variant="contained"
-            onClick={() =>
-              channel.sendControlChange(3, 63).sendControlChange(13, 85)
-            }
-          >
-            cc
-          </Button>
-        </header>
+        <Button
+          onClick={() => channel?.playNote("C4", { duration: 1000 })}
+          variant="contained"
+        >
+          note
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() =>
+            channel.sendControlChange(3, 63).sendControlChange(13, 85)
+          }
+        >
+          cc
+        </Button>
         <Button
           onClick={() => setCcArray([...ccArray, { cc: 1, value: 60 }])}
           variant="contained"
